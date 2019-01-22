@@ -1,0 +1,102 @@
+.zoom {
+    position: relative;
+    overflow: hidden;
+}
+
+.zoom:hover img {
+    transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+
+}
+
+.zoom img {
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #282d33;
+    border-color: transparent;
+    border-radius: 30px;
+
+}
+
+.card:hover {
+    background: #fff !important;
+    box-shadow: 12px 15px 20px 0px rgba(46, 61, 73, 0.15);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
+.pagination>li>a,
+.pagination>li>span {
+    border-radius: 50% !important;
+    margin: 0 5px;
+    color: black;
+
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #003C00;
+    background-color: rgb(243, 247, 247);
+    border: 1px solid #000000;
+}
+
+.page-item.disabled .page-link {
+    color: #868e96;
+    pointer-events: none;
+    cursor: auto;
+    background-color: rgb(249, 250, 249);
+    border-color: rgb(196, 199, 193);
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: rgb(0, 0, 0);
+    border-color: rgb(0, 0, 0);
+}
+
+
+
+.page-link:focus,
+.page-link:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: rgb(0, 0, 0);
+    border-color: rgb(196, 199, 193);
+}
+
+#myCarousel {
+    width: 300px;
+    height: 350px;
+}
+
+.carousel-inner {
+    height: 100%;
+}
+
+.item {
+    background-size: cover;
+    background-position: 50% 50%;
+    width: 100%;
+    height: 100%;
+    max-height: 350px;
+}
+
+.item img {
+    object-fit: cover;
+}

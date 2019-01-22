@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<main role="main">
+    <div class="container">
+      <h5 class="text-center pt-3">Your Holdings</h5>
+      <br />
+      <h6>Mutual Funds</h6>
+      <hr />
+      {% for fund in portfolioList.all %}
+  
+      <div class="card mb-3">
+        <div class="card-body">
+          {% for product in productList.all %}
+              
+             {% if product.id == fund.productid_id %}
+             <p class="card-text" onclick="window.location='{% url 'detail' product.id %}';" style=" cursor: pointer;">Product Name:{{ product.title }}</p>
+             <p class="card-text">Amfi Id:{{ product.stockid }}</p>
+             {% endif %}
+          {% endfor %}
+         
+          <p class="card-text">No of Shares:{{ fund.no_shares }}</p>
+          <p class="card-text">Start Date:{{ fund.start_date }}</p>
+          <p class="card-text">Notes: {{ fund.notes }}</p>
+          
+        </div>
+       
+      </div>
+  
+      {% endfor %}
+    </div>
+  
+    </main>
+  
+{% endblock %}
