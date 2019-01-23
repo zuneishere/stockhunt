@@ -24,97 +24,91 @@
     <label for="tags">Tags: </label>
     <input id="tags">
   </div> -->
+<!-- <div class="form-row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+          <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker" />
+          <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+          </div>
+        </div>
+        <script type="text/javascript">
+          $(function () {
+            $(".datepicker").datepicker({
+              'format': 'yy-mm-dd'
+
+            });
+
+          });
+        </script>
+      </div>
+    </div>
+  </div> -->
 
 
 
 <form method="POST" action="{% url 'addmutual' %}" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="form-row">
-    <div class="col-md-4 mb-3">
-      <label for="validationDefault01">Mutual Fund</label>
-      
-      <input list="browsers" name="browser">
-      <datalist id="browsers">
-        {% for mutualfund in mutualfunds.all %}
-      
-            <option value='{{ mutualfund.title }}'>
-        {% endfor %}
-      </datalist>
-    </div>
-  </div>
-  <div class="form-row"></div>
-  <input type="text" name="color" id="color" value="" list="colorlist" />
-	<datalist id="colorlist">
-		<select style="display: none;">
-			<option value="Black" />
-			<option value="Blue" />
-			<option value="Dark Green" />
-			<option value="Grey" />
-			<option value="Green" />
-			<option value="Red" />
-			<option value="White" />
-			<option value="Yellow" />
-		</select>
-  </datalist>
-  
-	<script type="text/javascript">
-	$(document).ready(function () {
-		var nativedatalist = !!('list' in document.createElement('input')) && 
-			!!(document.createElement('datalist') && window.HTMLDataListElement);
-	
-		if (!nativedatalist) {
-			$('input[list]').each(function () {
-				var availableTags = $('#' + $(this).attr("list")).find('option').map(function () {
-					return this.value;
-				}).get();
-				$(this).autocomplete({ source: availableTags });
-			});
-		}
-	});
-  </script>
-  </div>
-  <div class="form-row">
     <div class="col-md-6 mb-3">
+      <label for="ex1">Mutual Fund</label></br>
+      <input class="form-control" id="ex1" type="text" list="mfunds" name="mfdlist">
+      <datalist id="mfunds">
+        {% for mutualfund in mutualfunds.all %}
+        <option value='{{ mutualfund.title }}'>
+          {% endfor %}
+      </datalist>
+
+    </div>
+
+
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-3 mb-3">
       <label for="validationDefault03">No of Shares</label>
       <input type="text" class="form-control" id="validationDefault03" placeholder="50" required>
     </div>
   </div>
 
+
   <div class="form-row">
-    <div class="col-sm-6">
+    <div class="col-sm-3">
       <div class="form-group">
-        <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-          <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" />
-          <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
-            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-          </div>
-        </div>
+        <label for="validationDefault02">Start Date</label></br>
+        <input id="datepicker" width="276" />
+        <script>
+          $('#datepicker').datepicker();
+        </script>
       </div>
     </div>
-    <script type="text/javascript">
-      $(function () {
-        $('#datetimepicker4').datetimepicker({
-          format: 'L'
-        });
-      });
-    </script>
   </div>
   <div class="form-row">
-      <div class="col-sm-6">
-          <div class="form-group">
-      Sip Date: <input type="date" name="sdate">
-          </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="validationDefault03">Sip Date</label></br>
+        <input id="datepicker2" width="276" />
+        <script>
+          $('#datepicker2').datepicker();
+          </script>
       </div>
+    </div>
   </div>
+
+
   <div class="form-group">
-    <div class="form-check">
+    <div class="form-check col-sm-4">
       <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-      <label class="form-check-label" for="invalidCheck2">
-        Agree to terms and conditions
+      <label class="form-check-label" for="invalidCheck2">Agree to terms and conditions
       </label>
     </div>
   </div>
-  <input type="submit" class="btn btn-primary" type="submit" value="Add Product">
+  <div class="form-row">
+    <div class="col-sm-2">
+      <input type="submit" class="btn btn-primary" type="submit" value="Add Product">
+    </div>
+  </div>
 </form>
 </br>
 
