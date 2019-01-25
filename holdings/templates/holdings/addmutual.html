@@ -67,8 +67,8 @@
 
   <div class="form-row">
     <div class="col-md-3 mb-3">
-      <label for="validationDefault03">No of Shares</label>
-      <input type="text" class="form-control" id="validationDefault03" placeholder="50" required>
+      <label for="no_of_shares">No of Shares</label>
+      <input name="no_of_shares" type="text" class="form-control" id="no_of_shares" value="0" placeholder="50" required>
     </div>
   </div>
 
@@ -76,10 +76,10 @@
   <div class="form-row">
     <div class="col-sm-3">
       <div class="form-group">
-        <label for="validationDefault02">Start Date</label></br>
-        <input id="datepicker" width="276" />
+        <label for="datepicker1">Start Date</label></br>
+        <input name="datepicker1" id="datepicker1" width="276" />
         <script>
-          $('#datepicker').datepicker();
+          $('#datepicker1').datepicker();
         </script>
       </div>
     </div>
@@ -87,23 +87,15 @@
   <div class="form-row">
     <div class="col-sm-3">
       <div class="form-group">
-        <label for="validationDefault03">Sip Date</label></br>
-        <input id="datepicker2" width="276" />
+        <label for="datepicker2">Sip Date</label></br>
+        <input name="datepicker2" id="datepicker2" width="276" />
         <script>
           $('#datepicker2').datepicker();
           </script>
       </div>
     </div>
   </div>
-
-
-  <div class="form-group">
-    <div class="form-check col-sm-4">
-      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-      <label class="form-check-label" for="invalidCheck2">Agree to terms and conditions
-      </label>
-    </div>
-  </div>
+ 
   <div class="form-row">
     <div class="col-sm-2">
       <input type="submit" class="btn btn-primary" type="submit" value="Add Product">

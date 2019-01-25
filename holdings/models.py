@@ -20,3 +20,6 @@ class Holdingmutual(models.Model):
 
     def pub_date_pretty(self):
         return self.pub_date.strftime("%d %a %Y")
+    
+    def __str__(self):
+        return '%s' % self.productid

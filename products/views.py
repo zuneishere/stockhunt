@@ -73,5 +73,27 @@ def detail(request,product_id):
     stockdetail=response.json()
     return render(request,'products/detail.html',{'stockdetail':stockdetail['dataset']})
 
+def admutual(request):
+    if request.method == 'POST':
+        if request.POST['title'] and request.POST['url'] and request.POST['body'] and request.FILES['icon'] and request.FILES['image']:
+            product = Product()
+            product.title = request.POST['title']
+            if request.POST['url'].startswith('http://') or request.POST['url'].startswith('https://'):
+                product.url = request.POST['url']
+            else:
+                product.url = 'http://'+request.POST['url']
+            product.icon = request.FILES['icon']
+            product.image = request.FILES['image']
+            product.pub_date = timezone.datetime.now()
+            product.hunter = request.user
+            product.save()
+            return redirect('/products/'+str(product.id))
+
+        else:
+            return render(request, 'products/addmutual.html', {'error': 'Fields incomplete!'})
+
+    else:
+        return render(request, 'products/addmutual.html')
+
 
 

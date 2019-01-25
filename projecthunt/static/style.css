@@ -101,7 +101,9 @@ body {
     object-fit: cover;
 }
 
-
+.form-inline .form-group input {
+	width:300px;
+}
   
 #page-wrapper {
     width: 640px;
@@ -129,6 +131,7 @@ input {
     border: 1px solid #D9D9D9;
   }
   
+
   
   
   

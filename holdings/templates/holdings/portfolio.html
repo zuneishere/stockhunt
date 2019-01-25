@@ -10,18 +10,48 @@
   
       <div class="card mb-3">
         <div class="card-body">
-          {% for product in productList.all %}
-              
-             {% if product.id == fund.productid_id %}
-             <p class="card-text" onclick="window.location='{% url 'detail' product.id %}';" style=" cursor: pointer;">Product Name:{{ product.title }}</p>
-             <p class="card-text">Amfi Id:{{ product.stockid }}</p>
-             {% endif %}
-          {% endfor %}
-         
-          <p class="card-text">No of Shares:{{ fund.no_shares }}</p>
-          <p class="card-text">Start Date:{{ fund.start_date }}</p>
-          <p class="card-text">Notes: {{ fund.notes }}</p>
-          
+          <div id="table" class="table">
+            <!-- <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x"
+                  aria-hidden="true"></i></a></span> -->
+            <table class="table table-bordered table-responsive-md table-striped text-center">
+              <tr>
+                <th class="text-center">Mutual Fund</th>
+                <th class="text-center">Amfi ID</th>
+                <th class="text-center">No Of Shares</th>
+                <th class="text-center">Start Date</th>
+                <th class="text-center">Sip Date</th>
+                <th class="text-center">Notes</th>
+                <th class="text-center">Sort</th>
+                <th class="text-center">Remove</th>
+               
+              </tr>
+             
+              <!-- This is our clonable table line -->
+              <tr class="hide">
+                
+                {% for product in productList.all %}
+                    
+                   {% if product.id == fund.productid_id %}
+                   <td class="pt-3-half" ><p class="card-text" onclick="window.location='{% url 'detail' product.id %}';" style=" cursor: pointer;">{{ product.title }}</p></td>
+                   <td class="pt-3-half" ><p class="card-text">{{ product.stockid }}</p></td>
+                   {% endif %}
+                {% endfor %}
+                
+                <td class="pt-3-half" >{{ fund.no_shares }}</td>
+                <td class="pt-3-half" >{{ fund.start_date }}</td>
+                <td class="pt-3-half" >{{ fund.sip_date }}</td>
+                <td class="pt-3-half" >{{ fund.notes }}</td>
+                <td class="pt-3-half">
+                  <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
+                  <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
+                        aria-hidden="true"></i></a></span>
+                </td>
+                <td>
+                  <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
        
       </div>
