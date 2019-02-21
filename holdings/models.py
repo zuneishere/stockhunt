@@ -23,3 +23,6 @@ class Holdingmutual(models.Model):
     
     def __str__(self):
         return '%s' % self.productid
+
+    def get_absolute_url(self):
+        return reverse('portfolio')

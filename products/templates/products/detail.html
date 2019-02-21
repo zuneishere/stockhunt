@@ -1,18 +1,172 @@
 {% extends 'base.html' %}
+<script>
+    {% block jquery %}
+    var endpoint = '/api/chart/data/'
+   
+    console.log( "{{ topgainers }}")
+    var defaultData = [{% for i in stockdetail.data reversed %} "{{ i.1 }}", {% endfor %}]
+    var labels = [{% for i in stockdetail.data reversed%} "{{ i.0 }}", {% endfor %}];
+    setChart()
+  
+    function setChart() {
+        var ctx = document.getElementById("myChart");
+        var ctx2 = document.getElementById("myChart2");
+        var myChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Historic Nav',
+                    data: defaultData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                
+                elements: { point: { radius: 1, hitRadius: 1, hoverRadius: 4 } } , // disable for all points radius
+                responsive: true,
+                maintainAspectRatio: false,
+            
+            }
+        });
+        var myChart = new Chart(ctx, {
+            type: 'polarArea',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Historic Nav',
+                    data: defaultData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    } 
+    {% endblock %}
+</script>
+<script>
+{% block jquery2 %}
+$(".default-ticker").ticker({
+
+// item selector
+item: 'div',
+
+// Toggles whether the ticker should pause on mouse hover
+pauseOnHover: false,
+
+// <a href="https://www.jqueryscript.net/animation/">Animation</a> speed
+speed: 70,
+
+// Decides whether the ticker breaks when it hits a new item or if the track has reset
+pauseAt: '',
+
+// delay in milliseconds
+delay: 400
+
+});
+$(".default2-ticker").ticker({
+
+// item selector
+item: 'div',
+
+// Toggles whether the ticker should pause on mouse hover
+pauseOnHover: false,
+
+// <a href="https://www.jqueryscript.net/animation/">Animation</a> speed
+speed: 60,
+
+// Decides whether the ticker breaks when it hits a new item or if the track has reset
+pauseAt: '',
+
+// delay in milliseconds
+delay: 500
+
+});
+
+{% endblock %}
+</script>
+
 {% block content %}
 
 <!--   Start -->
-<div class="container-fluid content-row"></div>
-<div class="row pt-2">
+<div class="default-ticker">
+        {% for tpg in topgainers %}
+        <div class="bg-light">{{ tpg.symbol }}:{{ tpg.openPrice }} <i class="fas fa-caret-up"></i></div>      
+        {% endfor %}
+</div>
+<div class="default2-ticker">
+        {% for tpl in toplosers %}
+        <div class="bg-light">{{ tpl.symbol }}:{{ tpl.openPrice }} <i class="fas fa-caret-down"></i> </div>      
+        {% endfor %}
+</div>
+<div class="container-fluid content-row">
+ <div class="row pt-2">
 
     <div class="col-8 d-flex flex-column">
-        <div class="card bg-light mb-1 mt-1">
-            <h5>{{ stockdetail.name }}</h5>
+        <div class='row'>
+            
+                <h5> {{ stockdetail.name }} </h5>
+            
+        </div>
+        <div class='row'>
+            <div class='card bg-light mb-1 mt-1 pl-4 pr-4' >
+                    <div class="chart-container" style="position: relative; height:40vh; width:35vw">
+                    <canvas id="myChart2" ></canvas>        
+                    </div>   
+            </div>
         </div>
     </div>
     <div class="col-4 d-flex flex-column">
-        <div class="card bg-light mb-1 mt-1">
-            <table class="table" style="color:Grey;">
+        <div class="card bg-light mb-1 mt-1" style="max-width: 20rem;">
+            <div class="table-wrapper">
+            <table class="table-responsive table-sm card-list-table" style="color:Grey;">
                 <thead>
                 </thead>
                 <tbody>
@@ -44,10 +198,11 @@
                         <td> Description<i class="fab fa-searchengin"></i></td>
                         <td>{{ stockdetail.description }}</td>
                     </tr>
-                    
-                    
+
+
                 </tbody>
             </table>
+            </div>
             <div class="d-flex align-items-end flex-column" style="height: 50;">
                 <div class="pr-5 pb-3">
                     <h5><b>Latest NAV {{ stockdetail.data.0.1 }}</b></h5>
@@ -57,10 +212,7 @@
         </div>
 
     </div>
-</div>
-<div class="row pt-2">
-
-</div>
+ </div>
 </div>
 
 {% endblock %}

@@ -3,6 +3,10 @@ from django.contrib.auth.decorators import login_required
 from .models import Product
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from nsetools import Nse
+from pprint import pprint # just for neatness of display
 
 import requests
 defaultfundprice = 0
@@ -66,12 +70,17 @@ def create(request):
         return render(request,'products/create.html')
 @login_required
 def detail(request,product_id):
+    nse = Nse()
+    top_gainers = nse.get_top_gainers()
+    top_losers = nse.get_top_losers()
+
+
     productcode=get_object_or_404(Product,pk=product_id)
     url = 'https://www.quandl.com/api/v3/datasets/AMFI/'+str(productcode.stockid)+'.json?api_key=a6QtRRy_axhp9mTMRvyC'
     print(url)
     response=requests.get(url)
     stockdetail=response.json()
-    return render(request,'products/detail.html',{'stockdetail':stockdetail['dataset']})
+    return render(request,'products/detail.html',{'stockdetail':stockdetail['dataset'],'topgainers':top_gainers,'toplosers':top_losers})
 
 def admutual(request):
     if request.method == 'POST':
@@ -94,6 +103,22 @@ def admutual(request):
 
     else:
         return render(request, 'products/addmutual.html')
+
+
+
+class ChartData(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, format=None):
+        
+        labels = ["Users", "Blue", "Yellow", "Green", "Purple", "Orange"]
+        default_items = [23, 2, 3, 12, 2]
+        data = {
+                "labels": labels,
+                "default": default_items,
+        }
+        return Response(data)
 
 
 

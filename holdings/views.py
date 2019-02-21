@@ -1,8 +1,19 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from .models import  Holdingmutual
 from products.models import Product
 from .forms import MutualForm
 from django.contrib.auth.decorators import login_required
+from rest_framework.views import APIView
+from rest_framework.response import Response 
+from dal import autocomplete
+from django.views.generic.edit import CreateView
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+
+
+
+
 # Create your views here.
 def addmutual(request):
     mutualfunds= Product.objects
@@ -22,6 +33,7 @@ def addmutual2(request):
             mutual_form = form.save(commit=False)
             mutual_form.userid_id=request.user.id
             mutual_form.save()
+            return redirect('portfolio')
         else:
             print("form is not valide")
             print(request.user)
@@ -29,4 +41,63 @@ def addmutual2(request):
     else:
         form = MutualForm()
     return render(request, 'holdings/addmutual2.html',{'form':form})
+@login_required    
+def delmutual(request):
+    if request.method == "POST":
+        if request.method == 'POST':
+            holdid=request.POST['mfund2']
+            Holdingmutual.objects.filter(id=holdid).delete()
+            print("record deleted"+request.POST['mfund2'])
+            return redirect('portfolio')
+        return redirect('portfolio')
 
+#example class view- code not used
+
+class ChartData(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, format=None):
+        
+        labels = ["Users", "Blue", "Yellow", "Green", "Purple", "Orange"]
+        default_items = [23, 2, 3, 12, 2]
+        data = {
+                "labels": labels,
+                "default": default_items,
+        }
+        return Response(data)
+
+##autocomplete view
+class ProductAutocompleteView(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Product.objects.none()
+
+        qs = Product.objects.all()
+
+        if self.q:
+            qs = qs.filter(title__icontains=self.q)
+        
+        return qs
+
+class ViewDummyUserCreate4(CreateView):
+    # make a form based on this model
+    model = Holdingmutual
+    # if we only want to edit these two fields
+    # fields = ('first_name', 'last_name')
+    form_class = MutualForm
+    #fields = '__all__'
+ 
+    # render this html file, pass a form object to that file
+    template_name = 'holdings/addmutual2.html'
+ 
+    def form_valid(self, form):
+        print("form is valide")
+        mutual_form2 = form.save(commit=False)
+        mutual_form2.submitted_by = self.request.user
+        mutual_form2.userid_id=self.request.user.id
+        mutual_form2.save()       
+        return HttpResponseRedirect(self.get_success_url())
+ 
+    def get_success_url(self):
+        return reverse('portfolio')

@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+
 {% if error %}
 {{ error }}
 <br />
@@ -12,20 +13,15 @@
 <br />
 <form action='.' method='POST'>{% csrf_token %}
     <div class="form-row">
-        <div class="col-md-6 mb-3">
-            {{ form.productid|as_crispy_field }}
+        <div class="col-md-6 mb-1">
+            {{ form.productid|as_crispy_field  }}
         </div>
-
-
     </div>
-
     <div class="form-row">
-        <div class="col-md-2 mb-3">
+        <div class="col-md-2 mb-1">
             {{ form.no_shares|as_crispy_field }}
         </div>
     </div>
-
-
     <div class="form-row">
         <div class="col-sm-3">
             {{ form.start_date|as_crispy_field }}
@@ -41,7 +37,6 @@
             {{ form.notes|as_crispy_field }}
         </div>
     </div>
-
     <div class="form-row">
         <div class="col-sm-2">
             <input type="submit" class="btn btn-primary" type="submit" value="Add Product">
@@ -58,4 +53,6 @@
     $( "#id_start_date").datepicker();
     } );
 </script>
+
+{{ form.media }}
 {% endblock %}
