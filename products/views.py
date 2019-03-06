@@ -7,6 +7,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from nsetools import Nse
 from pprint import pprint # just for neatness of display
+from datetime import datetime, timedelta
+import pandas as pd
+import io
+from bsedata.bse import BSE
+
+
+
 
 import requests
 defaultfundprice = 0
@@ -29,6 +36,59 @@ def getPageData(request, allFundList):
     return funds
 
 def home(request):
+   
+    nse = Nse()
+    top_gainers_nse = nse.get_top_gainers()
+    top_losers_nse = nse.get_top_losers()
+    bse = BSE()
+    top_gainers_bse = bse.topGainers()
+    top_losers_bse = bse.topLosers()
+
+    t = datetime.now()
+    todate=t.strftime('%Y-%m-%d')
+    yesterday = datetime.now() - timedelta(days=1)     
+    fromdate=yesterday.strftime('%d/%m/%Y')
+    nifty_indice = nse.get_index_quote('NIFTY 50')
+    category = "market_cap/broad"
+    #bse index using bsetools-not working
+    #bse_indice= bse.getIndices(category)
+    #pprint(bse_indice)
+    #Quandl
+    charturl='https://www.quandl.com/api/v3/datasets/NSE/NIFTY_50.json?start_date=2008-01-01&end_date='+todate+'&api_key=a6QtRRy_axhp9mTMRvyC'
+    #url =  'https://www.quandl.com/api/v3/datasets/BSE/SENSEX.json?api_key=a6QtRRy_axhp9mTMRvyC'
+    #bseurl='https://api.bseindia.com/BseIndiaAPI/api/ProduceCSVForDate/w?strIndex=SENSEX&dtFromDate='+fromdate+'&dtToDate='+todate
+    ##moneycontrol appfeeds
+    bseurl='http://appfeeds.moneycontrol.com/jsonapi/market/indices&ind_id=4'
+    nseurl='http://appfeeds.moneycontrol.com/jsonapi/market/indices&ind_id=9'
+    print(charturl)
+    #Trying to get csv data from bseindia. You can use these if moneycontrol doesn't work
+    # try:
+    #     df=pd.read_csv(bseurl)
+    #     csvlist=df.iat[1,3]
+    # except:
+    #     csvlist=0
+    
+    # print(csvlist)
+    response=requests.get(bseurl)
+    bsedetail=response.json()
+    response=requests.get(nseurl)
+    nsedetail=response.json()
+    response=requests.get(charturl)
+    chartdetail=response.json()
+    pprint(top_gainers_bse)
+    return render(request,'products/home.html',{
+        'bsedetail':bsedetail,
+        'nifty':nsedetail,
+        'chartdetail':chartdetail['dataset'],
+        'topgainersnse':top_gainers_nse,
+        'toplosersnse':top_losers_nse,
+        'topgainersbse':top_gainers_bse,
+        'toplosersbse':top_losers_bse,
+        
+        })
+    
+
+def mutualfunds(request):
     #products=Product.objects
     #
     search_term=''
@@ -40,7 +100,7 @@ def home(request):
 
     print("called")
     
-    return render(request, 'products/home.html', {
+    return render(request, 'products/mutual.html', {
         'fundList': getPageData(request, funddataList),
         'search': search_term,
     })
@@ -103,6 +163,8 @@ def admutual(request):
 
     else:
         return render(request, 'products/addmutual.html')
+
+
 
 
 

@@ -8,9 +8,9 @@ from dal import autocomplete
 
 class MutualForm(forms.ModelForm):    
     #productid = forms.ModelChoiceField(queryset=Product.objects.all())
-    productid = forms.ModelChoiceField(queryset=Product.objects.all(),
-    widget=autocomplete.ModelSelect2(url='product-autocomplete')
-    )
+    # productid = forms.ModelChoiceField(queryset=Product.objects.all(),
+    # widget=autocomplete.ModelSelect2(url='product-autocomplete')
+    # )
     notes=forms.CharField(
         required=False,
         widget=forms.Textarea(
@@ -28,11 +28,11 @@ class MutualForm(forms.ModelForm):
          exclude=['userid']
          widgets = {'start_date': forms.DateInput(attrs={'class': 'datepicker' }),
          'sip_date': forms.DateInput(attrs={'class': 'datepicker' }),
-        #'productid':autocomplete.ModelSelect2(url='product-autocomplete',
-        #attrs={
-        #    'theme': 'bootstrap',
-        #    'data-minimum-input-length': 3,
-        #})
+         'productid':autocomplete.ModelSelect2(url='product-autocomplete',
+         attrs={
+            'theme': 'bootstrap',
+            'data-minimum-input-length': 3,
+        })
          }
          
     def __init__(self, *args, **kwargs):

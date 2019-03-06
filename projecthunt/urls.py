@@ -8,6 +8,7 @@ import products.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',products.views.home,name='homepage'),
+    path('mutualfunds/',products.views.mutualfunds,name='mutualfunds'),
     path('accounts/',include('accounts.urls')),
     path('products/',include('products.urls')),
     path('holdings/',include('holdings.urls')),

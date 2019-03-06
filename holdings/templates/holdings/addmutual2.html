@@ -11,47 +11,54 @@
 
 <h1>Create!</h1>
 <br />
-<form action='.' method='POST'>{% csrf_token %}
-    <div class="form-row">
-        <div class="col-md-6 mb-1">
-            {{ form.productid|as_crispy_field  }}
+
+<div class="col-6 d-flex flex-column">
+    <div class="card shadow">
+        <div class="col-xl-10">
+            <form action='.' method='POST'>{% csrf_token %}
+                <div class="form-group">
+
+                    {{ form.productid|as_crispy_field }}
+
+                </div>
+                <div class="form-group">
+
+                    {{ form.no_shares|as_crispy_field }}
+
+                </div>
+                <div class="form-group">
+
+                    {{ form.start_date|as_crispy_field }}
+
+                </div>
+                <div class="form-group">
+
+                    {{ form.sip_date|as_crispy_field }}
+
+                </div>
+                <div class="form-group">
+
+                    {{ form.notes|as_crispy_field }}
+
+                </div>
+                <div class="form-group">
+
+                    <input type="submit" class="btn btn-primary" type="submit" value="Add Product">
+
+                </div>
+            </form>
         </div>
     </div>
-    <div class="form-row">
-        <div class="col-md-2 mb-1">
-            {{ form.no_shares|as_crispy_field }}
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="col-sm-3">
-            {{ form.start_date|as_crispy_field }}
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="col-sm-3">
-            {{ form.sip_date|as_crispy_field }}
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="col-sm-4">
-            {{ form.notes|as_crispy_field }}
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="col-sm-2">
-            <input type="submit" class="btn btn-primary" type="submit" value="Add Product">
-        </div>
-    </div>
-</form>
+</div>
 <script>
-    $( function() {
-    $( "#id_sip_date").datepicker();
-    } );
+    $(function () {
+        $("#id_sip_date").datepicker();
+    });
 </script>
 <script>
-    $( function() {
-    $( "#id_start_date").datepicker();
-    } );
+    $(function () {
+        $("#id_start_date").datepicker();
+    });
 </script>
 
 {{ form.media }}

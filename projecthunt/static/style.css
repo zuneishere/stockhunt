@@ -1,3 +1,15 @@
+/* Hide ScrollBarr */
+* { overflow: -moz-scrollbars-none !important; }
+.table {
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+}
+.table::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+}
+/* Zoom */
 .zoom {
     position: relative;
     overflow: hidden;
@@ -130,9 +142,46 @@ input {
     border-radius: 3px;
     border: 1px solid #D9D9D9;
   }
-  
 
+smallf {
+    font-size: 88%;
+  }
+
+smallf,
+.smallf {
+  font-size: 88%;
+  font-weight: 400;
+}
+smallg {
+    font-size: 78%;
+  }
+
+smallg,
+.smallg {
+  font-size: 78%;
+  font-weight: 400;
+}
+
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 300px;
+    overflow: auto;
+  }
+.table-wrapper-scroll-y {
+    display: block;
+  }
   
-  
-  
+.table-responsive {
+    // Other values...
+    overflow-x: auto;
+    overflow-y: hidden;
+    // Other values...
+}
+
+table#t03 {
+    width: 100%;    
+    background-color: #f1f1c1;
+    overflow: auto;
+  }
   

@@ -14,6 +14,7 @@ from django.urls import reverse
 
 
 
+
 # Create your views here.
 def addmutual(request):
     mutualfunds= Product.objects
