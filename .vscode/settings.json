@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": "myvenv1/bin/python",
+    "python.pythonPath": "myenv_mac/bin/python",
     "git.ignoreLimitWarning": true
 }

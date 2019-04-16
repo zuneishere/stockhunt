@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    
+<h1>{% if not form.instance.pk %}Add a new Genre{% else %}Edit {{ form.instance.pk }}{% endif %}</h1>
+<div class="col-6 d-flex flex-column">
+    <div class="card shadow">
+        <div class="col-xl-10">
+    <form action="" method="post">{% csrf_token %}
+        <div class="form-group">
+
+            {{ form.no_shares|as_crispy_field }}
+
+        </div>
+        <div class="form-group">
+
+            {{ form.start_date|as_crispy_field }}
+
+        </div>
+        <div class="form-group">
+
+            {{ form.sip_date|as_crispy_field }}
+
+        </div>
+        <div class="form-group">
+
+            {{ form.notes|as_crispy_field }}
+
+        </div>
+        <div class="form-group">
+         <button type="submit" class="btn btn-info">Update</button>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+
+    <script>
+        $(function () {
+            $("#id_sip_date").datepicker();
+        });
+    </script>
+    <script>
+        $(function () {
+            $("#id_start_date").datepicker();
+        });
+    </script>
+    
+   
+
+{{ form.media }}
+{% endblock %}

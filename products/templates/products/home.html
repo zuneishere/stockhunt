@@ -3,41 +3,36 @@
   {% block jquery %}
   var endpoint = '/api/chart/data/'
  
-  console.log( "{{ topgainers }}")
   var defaultData = [{% for i in chartdetail.data reversed %} "{{ i.1 }}", {% endfor %}]
   var labels = [{% for i in chartdetail.data reversed%} "{{ i.0 }}", {% endfor %}];
-  setChart()
-
-  function setChart() {
-      var ctx = document.getElementById("myChart");
-      var ctx2 = document.getElementById("myChart2");
-      var myChart = new Chart(ctx2, {
-          type: 'line',
-          data: {
+  var defaultDataq = []
+  var labelsa = []
+  defaultDataFirst = [{% for i in chartdetail.data reversed %} {{ i.1 }}, {% endfor %}]
+  labelsFirst = [{% for i in chartdetail.data reversed%} "{{ i.0 }}", {% endfor %}];
+    var canvas = document.getElementById('myChart3');
+    var data = {
               labels: labels,
               datasets: [{
                   label: 'Historic Nav',
                   data: defaultData,
-                  backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                      'rgba(255,99,132,1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
+                  lineTension: 0.3,
+                  backgroundColor: "rgba(78, 115, 223, 0.05)",
+                  borderColor: "rgba(78, 115, 223, 1)",
+                  pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                  pointBorderColor: "rgba(78, 115, 223, 1)",
+                  pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                  pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                  pointBorderWidth: 2,
               }]
-          },
-          options: {
+          };
+
+    function adddata(){
+        myChart3.data.datasets[0].data[7] = 60;
+    myChart3.data.labels[7] = "Newly Added";
+    myChart3.update();
+    }
+
+  var option = {
               scales: {
                   yAxes: [{
                       ticks: {
@@ -50,45 +45,51 @@
               responsive: true,
               maintainAspectRatio: false,
           
-          }
-      });
-      var myChart3 = new Chart(ctx, {
-          type: 'polarArea',
-          data: {
-              labels: labels,
-              datasets: [{
-                  label: 'Historic Nav',
-                  data: defaultData,
-                  backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                      'rgba(255,99,132,1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero: true
-                      }
-                  }]
-              }
-          }
-      });
-  } 
+          };
+    var myChart3 = Chart.Line(canvas,{
+	data:data,
+    options:option
+    });
+  $( ".dropdown2" ).change(function() {
+	
+  var e = document.getElementById("dd");
+	var selected = e.options[e.selectedIndex].value;
+  
+ 
+
+      if (selected == "dps1") {
+        defaultDataq=defaultDataFirst.slice(-6)
+        labelsa = labelsFirst.slice(-6)
+      } else if (selected == "dps2") {
+        defaultDataq=defaultDataFirst.slice(-30)
+        labelsa = labelsFirst.slice(-30)
+
+      }
+      else if (selected == "dps3") {
+        defaultDataq=defaultDataFirst.slice(-365)
+        labelsa = labelsFirst.slice(-365)
+
+      } 
+      else if (selected == "dps4") {
+        defaultDataq=defaultDataFirst.slice(-(3*365))
+        labelsa = labelsFirst.slice(-(3*365))
+
+      }
+      else if (selected == "dps5") {
+        defaultDataq=defaultDataFirst
+        labelsa = labelsFirst
+
+      } 
+      else {
+      greeting = "Good evening";
+      }
+
+  myChart3.data.datasets[0].data = defaultDataq;
+  myChart3.data.labels = labelsa ;
+
+  myChart3.update();
+ 
+  });
   {% endblock %}
 </script>
 {% block content %}
@@ -212,36 +213,33 @@
               </div>
             </div>
           </div>
-
+          <div class="row">
+          
+          </div>
           <!-- Content Row -->
           <div class="row">
             <!-- Area Chart -->
             <div class="col-xl-8 col-lg-7">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Nifty Overview</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-area">
-                    <canvas id="myChart2"></canvas>
-                  </div>
+                <div class="card shadow mb-4">
+                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                         <h6 class="m-0 font-weight-bold text-primary">Bse Overview</h6>
+                   <select class="dropdown2" id="dd">
+                   <option value="" selected="selected">--</option>
+                   <option value="dps1">5D</option>
+                   <option value="dps2">1M</option>
+                   <option value="dps3">1Y</option>
+                   <option value="dps4">3Y</option>
+                   <option value="dps5">MAX</option>
+                    </select>
+                 </div>
+                 <div class="card-body">
+                  
+                     <div class="chart-area">
+                       <canvas id="myChart3"></canvas>
+                     </div>
+                 </div>
                 </div>
               </div>
-            </div>
 
             <!-- Active Table -->
             <div class="col-xl-4 col-lg-5">
@@ -274,7 +272,7 @@
                       <tr>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>Previous</th>
+                        <th>Change</th>
                       </tr>
                     </thead>
                     <!--Table head-->
@@ -283,7 +281,7 @@
                     <tbody>
                       <tr>
                           {% for tpg in topgainersnse %}
-                          <tr><td>{{ tpg.symbol }}</td><td>{{ tpg.openPrice }}</td><td>{{ tpg.previousPrice }}</td> </tr>
+                          <tr><td>{{ tpg.symbol }}</td><td>{{ tpg.openPrice }}</td><td>{{ tpg.change }}</td> </tr>
                           {% endfor %}
                           {% for tpg in topgainersbse %}
                           <tr></tr><td>{{ tpg.securityID }}</td><td>{{ tpg.LTP }}</td><td>{{ tpg.pChange }}</td></tr>
@@ -311,6 +309,211 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+              <div class="col-xl-4 col-lg-5">
+                  <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <h6 class="m-0 font-weight-bold text-primary">Top Gainers</h6>
+                      <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                          <div class="dropdown-header">Dropdown Header:</div>
+                          <a class="dropdown-item" href="#">Action</a>
+                          <a class="dropdown-item" href="#">Another action</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                      <div class="container">
+                         
+                      <!--Table-->
+                      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                      <table id="t01" class="table table-sm table-striped mb-0 smallg">
+                        <!--Table head-->
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Change</th>
+                          </tr>
+                        </thead>
+                        <!--Table head-->
+    
+                        <!--Table body-->
+                        <tbody>
+                          <tr>
+                              {% for tpg in topgainersnse %}
+                              <tr><td>{{ tpg.symbol }}</td><td>{{ tpg.ltp }}</td><td>{{ tpg.netPrice }}</td> </tr>
+                              {% endfor %}
+                              {% for tpg in topgainersbse %}
+                              <tr></tr><td>{{ tpg.securityID }}</td><td>{{ tpg.LTP }}</td><td>{{ tpg.pChange }}</td></tr>
+                              {% endfor %}         
+                          </tr>
+                          
+                        </tbody>
+                        <!--Table body-->
+    
+                      </table>
+                     <!--Table-->
+                     </div>
+                    </div>
+                      <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                          <i class="fas fa-circle text-primary"></i> Direct
+                        </span>
+                        <span class="mr-2">
+                          <i class="fas fa-circle text-success"></i> Social
+                        </span>
+                        <span class="mr-2">
+                          <i class="fas fa-circle text-info"></i> Referral
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-lg-3">
+                    <div class="card shadow mb-4">
+                      <!-- Card Header - Dropdown -->
+                      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Top Losers</h6>
+                        <div class="dropdown no-arrow">
+                          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Card Body -->
+                      <div class="card-body">
+                        <div class="container">
+                           
+                        <!--Table-->
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <table id="t01" class="table table-sm table-striped mb-0 smallg">
+                          <!--Table head-->
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Price</th>
+                              <th>Change</th>
+                            </tr>
+                          </thead>
+                          <!--Table head-->
+      
+                          <!--Table body-->
+                          <tbody>
+                            <tr>
+                                {% for tpg in toplosersnse %}
+                                <tr><td>{{ tpg.symbol }}</td><td>{{ tpg.ltp }}</td><td>{{ tpg.netPrice }}</td> </tr>
+                                {% endfor %}
+                                {% for tpg in toplosersbse %}
+                                <tr></tr><td>{{ tpg.securityID }}</td><td>{{ tpg.LTP }}</td><td>{{ tpg.pChange }}</td></tr>
+                                {% endfor %}         
+                            </tr>
+                            
+                          </tbody>
+                          <!--Table body-->
+      
+                        </table>
+                       <!--Table-->
+                       </div>
+                      </div>
+                        <div class="mt-4 text-center small">
+                          <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> Direct
+                          </span>
+                          <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Social
+                          </span>
+                          <span class="mr-2">
+                            <i class="fas fa-circle text-info"></i> Referral
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-5">
+                      <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                          <h6 class="m-0 font-weight-bold text-primary">Top Gainers</h6>
+                          <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                              <div class="dropdown-header">Dropdown Header:</div>
+                              <a class="dropdown-item" href="#">Action</a>
+                              <a class="dropdown-item" href="#">Another action</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body">
+                          <div class="container">
+                             
+                          <!--Table-->
+                          <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                          <table id="t01" class="table table-sm table-striped mb-0 smallg">
+                            <!--Table head-->
+                            <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Change</th>
+                              </tr>
+                            </thead>
+                            <!--Table head-->
+        
+                            <!--Table body-->
+                            <tbody>
+                              <tr>
+                                  {% for tpg in topgainersnse %}
+                                  <tr><td>{{ tpg.symbol }}</td><td>{{ tpg.openPrice }}</td><td>{{ tpg.change }}</td> </tr>
+                                  {% endfor %}
+                                  {% for tpg in topgainersbse %}
+                                  <tr></tr><td>{{ tpg.securityID }}</td><td>{{ tpg.LTP }}</td><td>{{ tpg.pChange }}</td></tr>
+                                  {% endfor %}         
+                              </tr>
+                              
+                            </tbody>
+                            <!--Table body-->
+        
+                          </table>
+                         <!--Table-->
+                         </div>
+                        </div>
+                          <div class="mt-4 text-center small">
+                            <span class="mr-2">
+                              <i class="fas fa-circle text-primary"></i> Direct
+                            </span>
+                            <span class="mr-2">
+                              <i class="fas fa-circle text-success"></i> Social
+                            </span>
+                            <span class="mr-2">
+                              <i class="fas fa-circle text-info"></i> Referral
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
           </div>
 
           <!-- Content Row -->

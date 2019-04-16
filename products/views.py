@@ -11,16 +11,18 @@ from datetime import datetime, timedelta
 import pandas as pd
 import io
 from bsedata.bse import BSE
-
-
-
-
 import requests
+from django import template
+
+
+
 defaultfundprice = 0
 search_term=''
 
 
 # Create your views here.
+
+
 
 
 def getPageData(request, allFundList):
@@ -55,12 +57,12 @@ def home(request):
     #pprint(bse_indice)
     #Quandl
     charturl='https://www.quandl.com/api/v3/datasets/NSE/NIFTY_50.json?start_date=2008-01-01&end_date='+todate+'&api_key=a6QtRRy_axhp9mTMRvyC'
-    #url =  'https://www.quandl.com/api/v3/datasets/BSE/SENSEX.json?api_key=a6QtRRy_axhp9mTMRvyC'
+    url2='https://www.quandl.com/api/v3/datasets/BSE/SENSEX.json?start_date=2008-01-01&end_date='+todate+'api_key=a6QtRRy_axhp9mTMRvyC'
     #bseurl='https://api.bseindia.com/BseIndiaAPI/api/ProduceCSVForDate/w?strIndex=SENSEX&dtFromDate='+fromdate+'&dtToDate='+todate
     ##moneycontrol appfeeds
     bseurl='http://appfeeds.moneycontrol.com/jsonapi/market/indices&ind_id=4'
     nseurl='http://appfeeds.moneycontrol.com/jsonapi/market/indices&ind_id=9'
-    print(charturl)
+    print(url2)
     #Trying to get csv data from bseindia. You can use these if moneycontrol doesn't work
     # try:
     #     df=pd.read_csv(bseurl)
@@ -73,19 +75,23 @@ def home(request):
     bsedetail=response.json()
     response=requests.get(nseurl)
     nsedetail=response.json()
-    response=requests.get(charturl)
-    chartdetail=response.json()
-    pprint(top_gainers_bse)
+    #Chartdetail for different dates
+    response3=requests.get(url2)
+    chartdetail=response3.json()
+    
+    pprint(chartdetail['dataset']['data'][:6])
     return render(request,'products/home.html',{
         'bsedetail':bsedetail,
         'nifty':nsedetail,
         'chartdetail':chartdetail['dataset'],
+        'chartlist5days':chartdetail['dataset']['data'][:30],
         'topgainersnse':top_gainers_nse,
         'toplosersnse':top_losers_nse,
         'topgainersbse':top_gainers_bse,
         'toplosersbse':top_losers_bse,
         
         })
+    
     
 
 def mutualfunds(request):
@@ -96,7 +102,7 @@ def mutualfunds(request):
     if 'search' in request.GET:
         search_term=request.GET['search']
         funddataList= Product.objects.filter(title__icontains=search_term)
-        print(*funddataList)
+        #print(*funddataList)
 
     print("called")
     
@@ -137,6 +143,8 @@ def detail(request,product_id):
 
     productcode=get_object_or_404(Product,pk=product_id)
     url = 'https://www.quandl.com/api/v3/datasets/AMFI/'+str(productcode.stockid)+'.json?api_key=a6QtRRy_axhp9mTMRvyC'
+    url2='https://www.quandl.com/api/v3/datasets/BSE/SENSEX.json?api_key=a6QtRRy_axhp9mTMRvyC'
+
     print(url)
     response=requests.get(url)
     stockdetail=response.json()

@@ -6,9 +6,11 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.views import APIView
 from rest_framework.response import Response 
 from dal import autocomplete
-from django.views.generic.edit import CreateView
+#from django.views.generic.edit import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+#from django.core.urlresolvers import reverse_lazy
 
 
 
@@ -97,6 +99,35 @@ class ViewDummyUserCreate4(CreateView):
         mutual_form2 = form.save(commit=False)
         mutual_form2.submitted_by = self.request.user
         mutual_form2.userid_id=self.request.user.id
+        mutual_form2.save()       
+        return HttpResponseRedirect(self.get_success_url())
+ 
+    def get_success_url(self):
+        return reverse('portfolio')
+
+#Have to implement user based checking
+class ViewUpdatePost(UpdateView): 
+    model = Holdingmutual
+    #form_class = MutualForm
+    template_name = 'holdings/editmutual.html'
+    fields = ['no_shares','start_date','sip_date','notes']
+    #success_url='holdings/portfolios'
+    queryset=Holdingmutual.objects.all()
+    
+ 
+    def get_object(self):
+        #holdid=self.request.POST['mfund2']
+        #print("holdid got  ** -"+holdid)
+        print("get_object_worked"+self.kwargs['pk'])
+        id = self.kwargs['pk']
+        return self.model.objects.get(pk=self.kwargs['pk'])
+        #return get_object_or_404(Holdingmutual,id=self.kwargs['pk'])
+   # def get_initial(self):
+   #     return { 'no_shares': 'foo', 'start_date': 'bar','sip_date': 'bar','notes': 'bar' }
+ 
+    def form_valid(self, form):
+        print("form is valide")
+        mutual_form2 = form.save(commit=False)
         mutual_form2.save()       
         return HttpResponseRedirect(self.get_success_url())
  

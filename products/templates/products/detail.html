@@ -344,11 +344,24 @@ delay: 500,
                                                             <td> Description<i class="fab fa-searchengin"></i></td>
                                                             <td>{{ stockdetail.description }}</td>
                                                         </tr>
+                                                        <tr></tr>
+                                                        <tr>
+                                                            <td>Latest NAV </td>
+                                                            <td>
+                                                              <div class="d-flex align-items-end flex-column" style="height: 50;">
+                                                                <div class="pr-5 pb-3">
+                                                                    <h5><b>{{ stockdetail.data.0.1 }}</b></h5>
+                                                                </div>
+                                                            </div>
+                                      
+                                                            </td>
+                                                          </tr>
                                     
                                     
                                                     </tbody>
                                                 </table>
                                                 </div>
+                                                
                                 </div>
                             </div>
                         </div>

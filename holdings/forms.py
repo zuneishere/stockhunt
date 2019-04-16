@@ -35,10 +35,10 @@ class MutualForm(forms.ModelForm):
         })
          }
          
-    def __init__(self, *args, **kwargs):
-        super(MutualForm, self).__init__(*args, **kwargs)
-        self.fields['no_shares'].label = "No of Shares"
-        self.fields['productid'].label = "Mutual Fund"
+#   def __init__(self, *args, **kwargs):
+#      super(MutualForm, self).__init__(*args, **kwargs)
+#      self.fields['no_shares'].label = "No of Shares"
+#      self.fields['productid'].label = "Mutual Fund"
 
 
          

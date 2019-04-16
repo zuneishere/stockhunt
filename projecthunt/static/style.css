@@ -173,15 +173,12 @@ smallg,
   }
   
 .table-responsive {
-    // Other values...
     overflow-x: auto;
-    overflow-y: hidden;
-    // Other values...
+    overflow-y: hidden;   
 }
 
 table#t03 {
     width: 100%;    
-    background-color: #f1f1c1;
-    overflow: auto;
+    overflow: initial;
   }
   

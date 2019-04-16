@@ -25,6 +25,7 @@
                             <th class="text-center">Sip Date</th>
                             <th class="text-center">Notes</th>
                             <th class="text-center">Sort</th>
+                            <th class="text-center">Edit</th>
                             <th class="text-center">Remove</th>
 
                         </tr>
@@ -58,7 +59,24 @@
                             </td>
                             <td>
                                 <!-- <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span> -->
-                                <form id="sbmg" onSubmit="if(!confirm('Do you want to Delete the record')){return false;}" class="flex-container" method="post" action="{% url 'delmutual' %}">
+                                <!-- 
+                                <form id="sbed" onSubmit="if(!confirm('Do you want to Edit the record')){return false;}" class="flex-container" method="post" action="{% url 'editmutual' fund.id %}">
+                                    {% csrf_token %}
+                                    <div class="input-group">
+                                        <input type="hidden" name="mfund2" value="{{fund.id}}">
+                                        <button name="edit"  type="submit" class="btn btn-danger btn-rounded btn-sm my-0">Edit</button>
+                                    </div>
+                                </form>
+                                -->
+                                <div>
+                                    <a href="{% url 'editmutual' fund.id %}"
+                                    class="btn btn-danger btn-rounded btn-sm my-0"
+                                    role="button">Edit</a>
+                                </div>
+                            </td>
+                            <td>
+                                <!-- <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span> -->
+                                <form id="sbmg" onSubmit="if(!confirm('Do you want to Delete the record')){return false;}" class="flex-container" method="post" action="{% url 'delmutual'  %}">
                                     {% csrf_token %}
                                     <div class="input-group">
                                         <input type="hidden" name="mfund2" value="{{fund.id}}">
