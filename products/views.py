@@ -57,7 +57,7 @@ def home(request):
     #pprint(bse_indice)
     #Quandl
     charturl='https://www.quandl.com/api/v3/datasets/NSE/NIFTY_50.json?start_date=2008-01-01&end_date='+todate+'&api_key=a6QtRRy_axhp9mTMRvyC'
-    url2='https://www.quandl.com/api/v3/datasets/BSE/SENSEX.json?start_date=2008-01-01&end_date='+todate+'api_key=a6QtRRy_axhp9mTMRvyC'
+    url2='https://www.quandl.com/api/v3/datasets/BSE/SENSEX.json?start_date=2008-01-01&end_date='+todate+'&api_key=a6QtRRy_axhp9mTMRvyC'
     #bseurl='https://api.bseindia.com/BseIndiaAPI/api/ProduceCSVForDate/w?strIndex=SENSEX&dtFromDate='+fromdate+'&dtToDate='+todate
     ##moneycontrol appfeeds
     bseurl='http://appfeeds.moneycontrol.com/jsonapi/market/indices&ind_id=4'
@@ -78,20 +78,30 @@ def home(request):
     #Chartdetail for different dates
     response3=requests.get(url2)
     chartdetail=response3.json()
-    
-    pprint(chartdetail['dataset']['data'][:6])
-    return render(request,'products/home.html',{
-        'bsedetail':bsedetail,
-        'nifty':nsedetail,
-        'chartdetail':chartdetail['dataset'],
-        'chartlist5days':chartdetail['dataset']['data'][:30],
-        'topgainersnse':top_gainers_nse,
-        'toplosersnse':top_losers_nse,
-        'topgainersbse':top_gainers_bse,
-        'toplosersbse':top_losers_bse,
+    if response3.status_code == 429:
+        return render(request,'products/home.html',{
+         'bsedetail':bsedetail,
+         'nifty':nsedetail,
+         'topgainersnse':top_gainers_nse,
+         'toplosersnse':top_losers_nse,
+         'topgainersbse':top_gainers_bse,
+         'toplosersbse':top_losers_bse,
         
-        })
+         })
+    else:
+        return render(request,'products/home.html',{
+         'bsedetail':bsedetail,
+         'nifty':nsedetail,
+         'chartdetail':chartdetail['dataset'],
+         'chartlist5days':chartdetail['dataset']['data'][:30],
+         'topgainersnse':top_gainers_nse,
+         'toplosersnse':top_losers_nse,
+         'topgainersbse':top_gainers_bse,
+         'toplosersbse':top_losers_bse,
+        
+         })
     
+  
     
 
 def mutualfunds(request):

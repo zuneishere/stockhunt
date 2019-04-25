@@ -10,6 +10,9 @@ from dal import autocomplete
 from django.views.generic import CreateView, UpdateView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from pprint import pprint
+import requests
+
 #from django.core.urlresolvers import reverse_lazy
 
 
@@ -24,9 +27,33 @@ def addmutual(request):
 
 def portfolio(request):
     holdings= Holdingmutual.objects.filter(userid_id=request.user.id)
+    #pprint(holdings)
     products= Product.objects
-   
-    return render(request,'holdings/portfolio.html',{'portfolioList':holdings,'productList':products})
+    portfolioList=[]
+    for holding in holdings:
+        productcode=get_object_or_404(Product,pk=holding.productid_id)
+        url = 'https://www.quandl.com/api/v3/datasets/AMFI/'+str(productcode.stockid)+'.json?api_key=a6QtRRy_axhp9mTMRvyC'
+        #print(url)
+        response=requests.get(url)
+        stockdetail=response.json()
+        navst=stockdetail['dataset']['data'][0][1]
+        #print(navst)
+        # Creation of a list with all values required for portfolio
+        portfList=[
+                   holding.id,
+                   productcode.title,
+                   holding.no_shares,
+                   holding.start_date,
+                   holding.sip_date,
+                   holding.notes,
+                   navst,
+                   (navst*holding.no_shares),
+                   holding.productid_id,
+                   productcode.stockid
+                   ]
+        portfolioList.append(portfList)
+        #pprint(portfolioList)
+    return render(request,'holdings/portfolio.html',{'portfolioList':portfolioList,'productList':products})
 @login_required
 def addmutual2(request):
     if request.method == "POST":

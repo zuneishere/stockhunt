@@ -24,33 +24,32 @@
                             <th class="text-center">Start Date</th>
                             <th class="text-center">Sip Date</th>
                             <th class="text-center">Notes</th>
+                            <th class="text-center">Nav</th>
+                            <th class="text-center">Total</th>
                             <th class="text-center">Sort</th>
                             <th class="text-center">Edit</th>
                             <th class="text-center">Remove</th>
 
                         </tr>
-
-                        <!-- This is our clonable table line -->
-                        {% for fund in portfolioList.all %}
+                        {% for fund in portfolioList %}
 
                         <tr class="hide">
 
-                            {% for product in productList.all %}
-
-                            {% if product.id == fund.productid_id %}
+                           
                             <td class="pt-3-half">
-                                <p class="card-text" onclick="window.location='{% url 'detail' product.id %}';" style=" cursor: pointer;">{{ product.title }}</p>
+                                <p class="card-text" onclick="window.location='{% url 'detail' fund.8 %}';" style=" cursor: pointer;">{{ fund.1 }}</p>
                             </td>
                             <td class="pt-3-half">
-                                <p class="card-text">{{ product.stockid }}</p>
+                                <p class="card-text">{{ fund.9 }}</p>
                             </td>
-                            {% endif %}
-                            {% endfor %}
+                         
 
-                            <td class="pt-3-half">{{ fund.no_shares }}</td>
-                            <td class="pt-3-half">{{ fund.start_date }}</td>
-                            <td class="pt-3-half">{{ fund.sip_date }}</td>
-                            <td class="pt-3-half">{{ fund.notes }}</td>
+                            <td class="pt-3-half">{{ fund.2 }}</td>
+                            <td class="pt-3-half">{{ fund.3 }}</td>
+                            <td class="pt-3-half">{{ fund.4 }}</td>
+                            <td class="pt-3-half">{{ fund.5 }}</td>
+                            <td class="pt-3-half">{{ fund.6|floatformat:2 }}</td>
+                            <td class="pt-3-half">{{ fund.7|floatformat:2 }}</td>
                             <td class="pt-3-half">
                                 <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
                                             aria-hidden="true"></i></a></span>
@@ -58,33 +57,25 @@
                                             aria-hidden="true"></i></a></span>
                             </td>
                             <td>
-                                <!-- <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span> -->
-                                <!-- 
-                                <form id="sbed" onSubmit="if(!confirm('Do you want to Edit the record')){return false;}" class="flex-container" method="post" action="{% url 'editmutual' fund.id %}">
-                                    {% csrf_token %}
-                                    <div class="input-group">
-                                        <input type="hidden" name="mfund2" value="{{fund.id}}">
-                                        <button name="edit"  type="submit" class="btn btn-danger btn-rounded btn-sm my-0">Edit</button>
+                                    <div>
+                                            <a href="{% url 'editmutual' fund.0 %}"
+                                            class="btn btn-danger btn-rounded btn-sm my-0"
+                                            role="button">Edit</a>
                                     </div>
-                                </form>
-                                -->
-                                <div>
-                                    <a href="{% url 'editmutual' fund.id %}"
-                                    class="btn btn-danger btn-rounded btn-sm my-0"
-                                    role="button">Edit</a>
-                                </div>
+                      
                             </td>
                             <td>
-                                <!-- <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span> -->
+                                
                                 <form id="sbmg" onSubmit="if(!confirm('Do you want to Delete the record')){return false;}" class="flex-container" method="post" action="{% url 'delmutual'  %}">
                                     {% csrf_token %}
                                     <div class="input-group">
-                                        <input type="hidden" name="mfund2" value="{{fund.id}}">
+                                        <input type="hidden" name="mfund2" value="{{fund.0}}">
                                         <button name="delete"  type="submit" class="btn btn-danger btn-rounded btn-sm my-0">Remove</button>
                                                                           </div>
                                 </form>
                             </td>
                             {% endfor %}
+                    
 
                         </tr>
                     </table>
