@@ -6,18 +6,96 @@
 
 <main role="main">
     <div class="container">
-        <h5 class="text-center pt-3">Your Holdings</h5>
-        <br />
-          <div class="card border-left-info shadow mb-4">
-            <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Mutual Funds</h6>
-            </div>
+        <!-- Content Row -->
+        <div class="row">
+          <div class="d-sm-flex align-items-center justify-content-between mb-2">
+          </div>
+        </div>
+        <!-- Content Row -->
+        <div class="row">
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-2">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Worth</div>
+                          <div class="smalle mb-0 font-weight-bold text-gray-800">{{ sumtotal }}</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-2">
+                  <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Your Investments</div>
+                          <div class="smalle mb-0 font-weight-bold text-gray-800">0000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-2">
+                  <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Todays Gain</div>
+                            <div class="smalle mb-0 font-weight-bold text-gray-800">0000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- Pending Requests Card Example -->
+                <div class="col-xl-3 col-md-6 mb-2">
+                  <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Gain</div>
+                          <div class="smalle mb-0 font-weight-bold text-gray-800">0000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        <!-- Content Row -->
+        <div class="row">
+          <!--Card -->
+        <div class="card border-left-info shadow mb-4">
+               <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Your Holdings</h6>
+                </div>
+             <!--Card Body-->
             <div class="card-body">
                 <div id="table" class="table">
                     <!-- <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x"
                   aria-hidden="true"></i></a></span> -->
-                    <table class="table table-bordered table-responsive-md table-striped text-center">
-                        <tr>
+                    <table class="table table-bordered table-responsive-md table-striped text-center ">
+                        <tr class="smallf font-weight-bold text-primary text-uppercase ">
                             <th class="text-center">Mutual Fund</th>
                             <th class="text-center">Amfi ID</th>
                             <th class="text-center">No Of Shares</th>
@@ -33,7 +111,7 @@
                         </tr>
                         {% for fund in portfolioList %}
 
-                        <tr class="hide">
+                        <tr class="hide smallf">
 
                            
                             <td class="pt-3-half">
@@ -81,8 +159,12 @@
                     </table>
                 </div>
             </div>
-
+             <!--Card Body -->
         </div>
+         <!--Card -->
+        </div>
+        <!-- Content Row -->
+       
 
 
     </div>

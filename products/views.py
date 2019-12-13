@@ -19,6 +19,20 @@ from django import template
 defaultfundprice = 0
 search_term=''
 
+nse = Nse()
+top_gainers_nse = nse.get_top_gainers()
+top_losers_nse = nse.get_top_losers()
+bse = BSE()
+top_gainers_bse = bse.topGainers()
+top_losers_bse = bse.topLosers()
+##moneycontrol appfeeds
+bseurl='http://appfeeds.moneycontrol.com/jsonapi/market/indices&ind_id=4'
+nseurl='http://appfeeds.moneycontrol.com/jsonapi/market/indices&ind_id=9'
+usdinrurl='https://priceapi.moneycontrol.com/pricefeed/notapplicable/currencyspot/%24%24%3BUSDINR'
+goldurl='https://priceapi.moneycontrol.com/pricefeed/mcx/commodityfuture/GOLD?expiry=05FEB2020'
+
+
+
 
 # Create your views here.
 
@@ -39,12 +53,7 @@ def getPageData(request, allFundList):
 
 def home(request):
    
-    nse = Nse()
-    top_gainers_nse = nse.get_top_gainers()
-    top_losers_nse = nse.get_top_losers()
-    bse = BSE()
-    top_gainers_bse = bse.topGainers()
-    top_losers_bse = bse.topLosers()
+
 
     t = datetime.now()
     todate=t.strftime('%Y-%m-%d')
@@ -59,10 +68,7 @@ def home(request):
     charturl='https://www.quandl.com/api/v3/datasets/NSE/NIFTY_50.json?start_date=2008-01-01&end_date='+todate+'&api_key=a6QtRRy_axhp9mTMRvyC'
     url2='https://www.quandl.com/api/v3/datasets/BSE/SENSEX.json?start_date=2008-01-01&end_date='+todate+'&api_key=a6QtRRy_axhp9mTMRvyC'
     #bseurl='https://api.bseindia.com/BseIndiaAPI/api/ProduceCSVForDate/w?strIndex=SENSEX&dtFromDate='+fromdate+'&dtToDate='+todate
-    ##moneycontrol appfeeds
-    bseurl='http://appfeeds.moneycontrol.com/jsonapi/market/indices&ind_id=4'
-    nseurl='http://appfeeds.moneycontrol.com/jsonapi/market/indices&ind_id=9'
-    print(url2)
+    
     #Trying to get csv data from bseindia. You can use these if moneycontrol doesn't work
     # try:
     #     df=pd.read_csv(bseurl)
@@ -75,25 +81,39 @@ def home(request):
     bsedetail=response.json()
     response=requests.get(nseurl)
     nsedetail=response.json()
+    response=requests.get(usdinrurl)
+    usdinrdetail=response.json()
+    response=requests.get(goldurl)
+    golddetail=response.json()
+    
+    
     #Chartdetail for different dates
     response3=requests.get(url2)
     chartdetail=response3.json()
     if response3.status_code == 429:
         return render(request,'products/home.html',{
-         'bsedetail':bsedetail,
-         'nifty':nsedetail,
-         'topgainersnse':top_gainers_nse,
-         'toplosersnse':top_losers_nse,
-         'topgainersbse':top_gainers_bse,
-         'toplosersbse':top_losers_bse,
+        'topgainers':top_gainers_nse,
+        'toplosers':top_losers_nse,
+        'bsedetail':bsedetail,
+        'nifty':nsedetail,
+        'usdinrdetail':usdinrdetail,
+        'golddetail':golddetail,
+        'topgainersnse':top_gainers_nse,
+        'toplosersnse':top_losers_nse,
+        'topgainersbse':top_gainers_bse,
+        'toplosersbse':top_losers_bse,
         
          })
     else:
         return render(request,'products/home.html',{
-         'bsedetail':bsedetail,
-         'nifty':nsedetail,
          'chartdetail':chartdetail['dataset'],
          'chartlist5days':chartdetail['dataset']['data'][:30],
+         'topgainers':top_gainers_nse,
+         'toplosers':top_losers_nse,
+         'bsedetail':bsedetail,
+         'nifty':nsedetail,
+         'usdinrdetail':usdinrdetail,
+         'golddetail':golddetail,
          'topgainersnse':top_gainers_nse,
          'toplosersnse':top_losers_nse,
          'topgainersbse':top_gainers_bse,
@@ -115,10 +135,28 @@ def mutualfunds(request):
         #print(*funddataList)
 
     print("called")
+    response=requests.get(bseurl)
+    bsedetail=response.json()
+    response=requests.get(nseurl)
+    nsedetail=response.json()
+    response=requests.get(usdinrurl)
+    usdinrdetail=response.json()
+    response=requests.get(goldurl)
+    golddetail=response.json()
     
     return render(request, 'products/mutual.html', {
         'fundList': getPageData(request, funddataList),
         'search': search_term,
+        'topgainers':top_gainers_nse,
+        'toplosers':top_losers_nse,
+        'bsedetail':bsedetail,
+        'nifty':nsedetail,
+        'usdinrdetail':usdinrdetail,
+        'golddetail':golddetail,
+        'topgainersnse':top_gainers_nse,
+        'toplosersnse':top_losers_nse,
+        'topgainersbse':top_gainers_bse,
+        'toplosersbse':top_losers_bse,
     })
     #return render(request,'products/home.html',{'products':products})
 
@@ -150,6 +188,15 @@ def detail(request,product_id):
     top_gainers = nse.get_top_gainers()
     top_losers = nse.get_top_losers()
 
+    response=requests.get(bseurl)
+    bsedetail=response.json()
+    response=requests.get(nseurl)
+    nsedetail=response.json()
+    response=requests.get(usdinrurl)
+    usdinrdetail=response.json()
+    response=requests.get(goldurl)
+    golddetail=response.json()
+
 
     productcode=get_object_or_404(Product,pk=product_id)
     url = 'https://www.quandl.com/api/v3/datasets/AMFI/'+str(productcode.stockid)+'.json?api_key=a6QtRRy_axhp9mTMRvyC'
@@ -158,7 +205,20 @@ def detail(request,product_id):
     print(url)
     response=requests.get(url)
     stockdetail=response.json()
-    return render(request,'products/detail.html',{'stockdetail':stockdetail['dataset'],'topgainers':top_gainers,'toplosers':top_losers})
+    return render(request,'products/detail.html',{
+        'stockdetail':stockdetail['dataset'],
+        'topgainers':top_gainers_nse,
+        'toplosers':top_losers_nse,
+        'bsedetail':bsedetail,
+        'nifty':nsedetail,
+        'usdinrdetail':usdinrdetail,
+        'golddetail':golddetail,
+        'topgainersnse':top_gainers_nse,
+        'toplosersnse':top_losers_nse,
+        'topgainersbse':top_gainers_bse,
+        'toplosersbse':top_losers_bse,
+    
+        })
 
 def admutual(request):
     if request.method == 'POST':

@@ -22,6 +22,7 @@
   <!-- Jquery autocomplete -->
   
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
   <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>  -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -45,7 +46,10 @@
       <!-- Chart.js -->
      <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script> -->
 <!-- AutoComplete-light -->
-
+<link src="/static/collected/autocomplete_light/vendor/select2/dist/css/select2.css" type="text/css" media="all" rel="stylesheet" />
+<link src="/static/collected/autocomplete_light/select2.css" type="text/css" media="all" rel="stylesheet" />
+<script type="text/javascript" src="/static/collected/autocomplete_light/autocomplete.init.js"></script>
+<script type="text/javascript" src="/static/collected/autocomplete_light/select2.js"></script> 
 <!--## Sbadmin Template-->
 <!-- Custom fonts for this template-->
 <link href="{% static 'sbadmin/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -69,6 +73,8 @@
 <!--## Sbadmin Template End-->
 
 <!-- ticker.js -->
+<link href="{% static 'style.css' %}" rel="stylesheet">
+<script src="{% static 'js/datepick.js' %}"></script>
 <link href="{% static 'style.css' %}" rel="stylesheet">
 <script src="{% static 'js/datepick.js' %}"></script>
 <link href="{% static 'dist/css/ticker.min.css' %}" rel="stylesheet">

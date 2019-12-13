@@ -30,6 +30,7 @@ def portfolio(request):
     #pprint(holdings)
     products= Product.objects
     portfolioList=[]
+    sumtotal=0
     for holding in holdings:
         productcode=get_object_or_404(Product,pk=holding.productid_id)
         url = 'https://www.quandl.com/api/v3/datasets/AMFI/'+str(productcode.stockid)+'.json?api_key=a6QtRRy_axhp9mTMRvyC'
@@ -37,6 +38,7 @@ def portfolio(request):
         response=requests.get(url)
         stockdetail=response.json()
         navst=stockdetail['dataset']['data'][0][1]
+        navstotal=(navst*holding.no_shares)
         #print(navst)
         # Creation of a list with all values required for portfolio
         portfList=[
@@ -47,13 +49,14 @@ def portfolio(request):
                    holding.sip_date,
                    holding.notes,
                    navst,
-                   (navst*holding.no_shares),
+                   navstotal,
                    holding.productid_id,
                    productcode.stockid
                    ]
         portfolioList.append(portfList)
+        sumtotal=sumtotal+navstotal
         #pprint(portfolioList)
-    return render(request,'holdings/portfolio.html',{'portfolioList':portfolioList,'productList':products})
+    return render(request,'holdings/portfolio.html',{'portfolioList':portfolioList,'productList':products,'sumtotal':sumtotal})
 @login_required
 def addmutual2(request):
     if request.method == "POST":

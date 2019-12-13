@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+</div>
+{% include 'headnav.html' %}
 <div class="row pt-1 pb-1 pl-3">
 <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
@@ -16,7 +19,7 @@
 
         </div>
         <div class="col-9 d-flex flex-column" onclick="window.location='{% url 'detail' fund.id %}';" style="cursor: pointer;">
-            <div class="row h-50">
+            <div class="row h-50 smallf">
                 {{ fund.title }}
             </div>
 

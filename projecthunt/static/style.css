@@ -143,6 +143,16 @@ input {
     border: 1px solid #D9D9D9;
   }
 
+smalle {
+   font-size: 96%;
+ }
+
+smalle,
+.smalle {
+  font-size: 96%;
+  font-weight: 400;
+}
+
 smallf {
     font-size: 88%;
   }
@@ -159,6 +169,16 @@ smallg {
 smallg,
 .smallg {
   font-size: 78%;
+  font-weight: 400;
+}
+
+smallh {
+    font-size: 68%;
+  }
+
+smallh,
+.smallh {
+  font-size: 68%;
   font-weight: 400;
 }
 
