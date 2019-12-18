@@ -8,30 +8,42 @@
 <br />
 <br />
 {% endif %}
+<div class="container-fluid"></div>
+    <div class="row d-flex h-75 justify-content-center align-items-center mb-2">
+            <div class="col-xs-12 center-block text-center">
+            </div>
+    </div>
+    <div class="row">
+        <div class="d-sm-flex align-items-center justify-content-between mb-2">
+        </div>
+  </div>
+    <!-- Content Row start --> 
+    <div class="row d-flex h-75 justify-content-center align-items-center mb-2">
+    
+        <div class="col-2 d-flex flex-column"></div>
+    <!-- Content column start --> 
 
-<h1>Create!</h1>
-<br />
-
-<div class="col-6 d-flex flex-column">
-    <div class="card shadow">
-        <div class="col-xl-10">
+        <div class="col-8 d-flex flex-column">
+    <!-- card start -->
+        <div class="card shadow px-4">
+          <div style="text-align:center;border:1px"><h5>Add Mutual Fund</h5></div>
             <form action='.' method='POST'>{% csrf_token %}
                 <div class="form-group">
 
                     {{ form.productid|as_crispy_field }}
 
                 </div>
-                <div class="form-group">
+                <div class="form-group w-50">
 
                     {{ form.no_shares|as_crispy_field }}
 
                 </div>
-                <div class="form-group">
+                <div class="form-group w-50">
 
                     {{ form.start_date|as_crispy_field }}
 
                 </div>
-                <div class="form-group">
+                <div class="form-group w-50">
 
                     {{ form.sip_date|as_crispy_field }}
 
@@ -42,13 +54,20 @@
 
                 </div>
                 <div class="form-group">
-
-                    <input type="submit" class="btn btn-primary" type="submit" value="Add Product">
-
+                    <div class="text-right">
+                        <button class="btn btn-info pull-right" type="submit" >Add Product</button>
+                    </div>
                 </div>
             </form>
+        
+            </div>
+    <!-- card end -->
         </div>
+    <!-- Content column end -->
+
+     <div class="col-2 d-flex flex-column"></div>
     </div>
+    <!-- Content column start --> 
 </div>
 <script>
     $(function () {

@@ -5,7 +5,7 @@
 <br />
 <br />
 {% endif %}
-<h1>Create!</h1>
+
 <br />
 
 <!-- <script>
@@ -46,6 +46,8 @@
     </div>
   </div> -->
 
+  <h1>Create!</h1>
+  
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
   </div>
 
@@ -53,7 +55,7 @@
   {% csrf_token %}
   <div class="form-row">
     <div class="col-md-6 mb-3">
-      <label for="ex1">Mutual Fund</label></br>
+      <label for="Productid">Mutual Fund</label></br>
       <input class="form-control" id="ex1" type="text" list="mfunds" name="mfdlist">
       <datalist id="mfunds">
         {% for mutualfund in mutualfunds.all %}
@@ -99,7 +101,7 @@
  
   <div class="form-row">
     <div class="col-sm-2">
-      <input type="submit" class="btn btn-primary" type="submit" value="Add Product">
+      <input type="submit" class="btn btn-primary btn-sm pull-right" type="submit" value="Add Product">
     </div>
   </div>
 </form>

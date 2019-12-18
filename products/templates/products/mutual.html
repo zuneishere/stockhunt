@@ -3,35 +3,51 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
 </div>
 {% include 'headnav.html' %}
-<div class="row pt-1 pb-1 pl-3">
-<form class="form-inline my-2 my-lg-0">
+<!-- Container Start  -->
+<div class="container-fluid">
+<!-- Search Row  --> 
+<div class="row">
+<form class="form-inline my-2 my-lg-0 w-100">
+        <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-2 ml-2 mr-4 w-100">
+            <div class="input-group">
+                  <input class="form-control mr-sm-2 border-0 bg-light pl-4 ml-4" type="search" placeholder="What're you searching for?" aria-describedby="button-addon1"  name="search">
+                  <div class="input-group-append">
+                    <button id="button-addon1" type="submit" class="btn btn-link text-warning"><i class="fa fa-search"></i></button>
+                  </div>
+            </div>
+        </div>
+<!-- Card  
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+       --> 
 </form>
 </div>
+<!-- Search RowEnd  -->
+
+<!-- List Row Start  -->
+<div class="row">
+<!-- start  for loop to list funds  -->
 {% for fund in fundList %}
-<!-- Card      {{ fund.build.make }}  -->
-<div class="card bg-light mb-1 mt-1">
-
-    <div class="row pt-1 pb-1 pl-2">
-
-        <div class="col-1" onclick="window.location='{% url 'detail' fund.id %}';" style=" cursor: pointer;">
-
-        </div>
+<!-- Card  Row    {{ fund.build.make }}  -->
+<div class="row w-100">
+    <div class="card bg-light w-100 h-100 mb-1 mt-1">
+        <div class="col-1" onclick="window.location='{% url 'detail' fund.id %}';" style=" cursor: pointer;"></div>
         <div class="col-9 d-flex flex-column" onclick="window.location='{% url 'detail' fund.id %}';" style="cursor: pointer;">
-            <div class="row h-50 smallf">
+            <div class="smallf">
                 {{ fund.title }}
             </div>
-
         </div>
-        <div class="col-2 d-flex align-items-end">
-
-        </div>
+        <div class="col-2 d-flex align-items-end"></div>
     </div>
 </div>
-<!-- Card -->
+<!-- Card Row -->
 {% endfor %}
-<br />
+<!-- End  for loop to list funds  -->
+</div>
+<!-- List Row End  -->
+<div class="row">
+<div class="d-sm-flex align-items-center justify-content-between mb-4"></div>
+</div>
 <div class="row">
     {% if fundList.has_other_pages %}
     <div class="container">
@@ -71,6 +87,10 @@
             <nav aria-label="Page navigation example">
     </div>
 </div>
+
+</div>
+<!-- Container End  -->
+
 {% endif %}
 
 {% endblock %}
