@@ -16,10 +16,6 @@ import requests
 #from django.core.urlresolvers import reverse_lazy
 
 
-
-
-
-
 # Create your views here.
 def addmutual(request):
     mutualfunds= Product.objects

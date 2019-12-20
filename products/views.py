@@ -53,8 +53,6 @@ def getPageData(request, allFundList):
 
 def home(request):
    
-
-
     t = datetime.now()
     todate=t.strftime('%Y-%m-%d')
     yesterday = datetime.now() - timedelta(days=1)     

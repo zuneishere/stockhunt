@@ -35,4 +35,4 @@ def signup(request):
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
-    return render(request,'accounts/signup.html')
+    return render(request,'accounts/login.html')

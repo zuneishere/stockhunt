@@ -5,6 +5,7 @@
 <br />
 <br />
 {% endif %}
+<!-- B
 <h1>Login!</h1>
 <br />
 <form  method="POST" action="{% url 'login' %}">
@@ -20,4 +21,84 @@
   <br />
   <input type="submit" class="btn btn-primary" type="submit" value="Login">
 </form>
+-->
+<!--Block -->
+<div class="container-fluid"></div>
+    <div class="row d-flex h-75 justify-content-center align-items-center mb-2">
+            <div class="col-xs-12 center-block text-center">
+            </div>
+    </div>
+    <div class="row">
+        <div class="d-sm-flex align-items-center justify-content-between mb-2">
+        </div>
+  </div>
+    <!-- Content Row start --> 
+    <div class="row d-flex h-75 justify-content-center align-items-center mb-2">
+    
+        <div class="col-4 d-flex flex-column"></div>
+    <!-- Content column start --> 
+
+        <div class="col-4 d-flex flex-column">
+    <!-- card start -->
+    <div class="card rounded shadow shadow-sm">
+      <h5 class="card-header info-color white-text text-center py-4">
+        <strong>Sign in</strong>
+      </h5>
+      <div class="card-body">
+          <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+              <div class="form-group">
+                  <label for="username">Username</label>
+                  <input type="text" class="form-control rounded-0" name="username" id="username" required="">
+                  <div class="invalid-feedback">Oops, you missed this one.</div>
+              </div>
+              <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control rounded-0" name="password" id="pwd1" required="" autocomplete="new-password">
+                  <div class="invalid-feedback">Enter your password too!</div>
+              </div>
+              <!-- 
+              <div>
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                     <span class="custom-control-description small text-dark">Remember me on this computer</span>
+                  </label>
+              </div>
+               -->
+              <button type="submit" class="btn btn-sm btn-success btn-lg float-right" id="btnLogin">Login</button>
+              </br>
+              </br>
+
+              <!-- Social login -->
+              <div class="text-center">
+                <p>or sign in with:</p>
+                <a type="button" class="btn-floating btn-fb btn-sm">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a type="button" class="btn-floating btn-tw btn-sm">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a type="button" class="btn-floating btn-li btn-sm">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a type="button" class="btn-floating btn-git btn-sm">
+                  <i class="fab fa-github"></i>
+                </a>
+              </div>
+
+          </form>
+      </div>
+      <!--/card-block-->
+  </div>
+
+    <!-- card end -->
+        </div>
+    <!-- Content column end -->
+
+     <div class="col-4 d-flex flex-column"></div>
+    </div>
+    <!-- Content Row End --> 
+</div>
+<!--Block End-->
 {% endblock %}
