@@ -26,41 +26,41 @@
         <div class="col-8 d-flex flex-column">
     <!-- card start -->
         <div class="card shadow px-4">
-          <div style="text-align:center;border:1px"><h5>Add Mutual Fund</h5></div>
-            <form action='.' method='POST'>{% csrf_token %}
+          <div style="text-align:center;border:1px"><h5>Add Mutual Fund SIP</h5></div>
+            <form action='.' method='POST' id="otherFieldDivsip">{% csrf_token %}
                 <div class="form-group">
 
                     {{ form.productid|as_crispy_field }}
 
                 </div>
+
                 <div class="form-group w-50">
 
-                    {{ form.no_shares|as_crispy_field }}
+                    {{ form.date|as_crispy_field }}
 
                 </div>
                 <div class="form-group w-50">
 
-                    {{ form.start_date|as_crispy_field }}
+                    {{ form.end_date|as_crispy_field }}
 
-                </div>
-                <div class="form-group w-50">
+                </div>           
+                  
 
-                    {{ form.sip_date|as_crispy_field }}
+                <div class="form-group w-50" >
 
-                </div>
-                <div class="form-group">
-
-                    {{ form.notes|as_crispy_field }}
+                    {{ form.invest_amount|as_crispy_field }}
 
                 </div>
                 <div class="form-group">
                     <div class="text-right">
-                        <button class="btn btn-info pull-right" type="submit" >Add Product</button>
+                        <button class="btn btn-info pull-right" type="submit" >Add Sip</button>
                     </div>
                 </div>
             </form>
+
+            
         
-            </div>
+        </div>
     <!-- card end -->
         </div>
     <!-- Content column end -->
@@ -71,14 +71,16 @@
 </div>
 <script>
     $(function () {
-        $("#id_sip_date").datepicker();
+        $("#id_date").datepicker();
     });
 </script>
 <script>
     $(function () {
-        $("#id_start_date").datepicker();
+        $("#id_end_date").datepicker();
     });
 </script>
+
+
 
 {{ form.media }}
 {% endblock %}

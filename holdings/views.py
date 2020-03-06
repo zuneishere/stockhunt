@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from .models import  Holdingmutual
+from .models import  Holdingmutual,Holdingmutualsip
 from products.models import Product
-from .forms import MutualForm
+from .forms import MutualForm,MutualForm2
 from django.contrib.auth.decorators import login_required
 from rest_framework.views import APIView
 from rest_framework.response import Response 
@@ -17,9 +17,9 @@ import requests
 
 
 # Create your views here.
-def addmutual(request):
+def addmutual5(request):
     mutualfunds= Product.objects
-    return render(request,'holdings/addmutual.html',{'mutualfunds':mutualfunds})
+    return render(request,'holdings/addmutual5.html',{'mutualfunds':mutualfunds})
 
 def portfolio(request):
     holdings= Holdingmutual.objects.filter(userid_id=request.user.id)
@@ -54,7 +54,7 @@ def portfolio(request):
         #pprint(portfolioList)
     return render(request,'holdings/portfolio.html',{'portfolioList':portfolioList,'productList':products,'sumtotal':sumtotal})
 @login_required
-def addmutual2(request):
+def addmutual(request):
     if request.method == "POST":
         form = MutualForm(data=request.POST)
         if form.is_valid():
@@ -69,7 +69,7 @@ def addmutual2(request):
 
     else:
         form = MutualForm()
-    return render(request, 'holdings/addmutual2.html',{'form':form})
+    return render(request, 'holdings/addmutual.html',{'form':form})
 @login_required    
 def delmutual(request):
     if request.method == "POST":
@@ -118,7 +118,30 @@ class ViewDummyUserCreate4(CreateView):
     #fields = '__all__'
  
     # render this html file, pass a form object to that file
-    template_name = 'holdings/addmutual2.html'
+    template_name = 'holdings/addmutual.html'
+ 
+    def form_valid(self, form):
+        print("form is valide")
+        mutual_form2 = form.save(commit=False)
+        mutual_form2.submitted_by = self.request.user
+        mutual_form2.userid_id=self.request.user.id
+        mutual_form2.investment_type="BUY"
+        mutual_form2.save()       
+        return HttpResponseRedirect(self.get_success_url())
+ 
+    def get_success_url(self):
+        return reverse('portfolio')
+class ViewDummyUserCreate5(CreateView):
+    # make a form based on this model
+    model = Holdingmutualsip
+    print("form is enterred")
+    # if we only want to edit these two fields
+    # fields = ('first_name', 'last_name')
+    form_class = MutualForm2
+    #fields = '__all__'
+ 
+    # render this html file, pass a form object to that file
+    template_name = 'holdings/addmutualsip.html'
  
     def form_valid(self, form):
         print("form is valide")

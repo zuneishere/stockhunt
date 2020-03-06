@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if error %}
+{{ error }}
+<br />
+<br />
+{% endif %}
+
+<br />
+
+<!-- <script>
+  $( function() {
+      var availableTags = [
+        "AxisMF",
+        "AppleScript",
+        "Asp",
+       ];
+      $( "#tags" ).autocomplete({
+        source: availableTags
+      });
+    } );
+</script>
+<div class="ui-widget">
+    <label for="tags">Tags: </label>
+    <input id="tags">
+  </div> -->
+<!-- <div class="form-row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+          <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker" />
+          <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+          </div>
+        </div>
+        <script type="text/javascript">
+          $(function () {
+            $(".datepicker").datepicker({
+              'format': 'yy-mm-dd'
+
+            });
+
+          });
+        </script>
+      </div>
+    </div>
+  </div> -->
+  <div class="container-fluid">
+      <!-- Page Heading -->
+     <!-- Content Row -->
+            <div class="row">
+             <div class="d-sm-flex align-items-center justify-content-between mb-2">
+             </div>
+           </div>
+     <!-- Content Row -->
+  <h1>Create!</h1>
+
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+  
+  </div>
+<!-- Content Row Start-->
+<div class="row">
+
+<form method="POST" action="{% url 'addmutual' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="Productid">Mutual Fund</label></br>
+      <input class="form-control" id="ex1" type="text" list="mfunds" name="mfdlist">
+      <datalist id="mfunds">
+        {% for mutualfund in mutualfunds.all %}
+        <option value='{{ mutualfund.title }}'>
+          {% endfor %}
+      </datalist>
+
+    </div>
+
+
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-3 mb-3">
+      <label for="no_of_shares">No of Shares</label>
+      <input name="no_of_shares" type="text" class="form-control" id="no_of_shares" value="0" placeholder="50" required>
+    </div>
+  </div>
+
+
+  <div class="form-row">
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="datepicker1">Start Date</label></br>
+        <input name="datepicker1" id="datepicker1" width="276" />
+        <script>
+          $('#datepicker1').datepicker();
+        </script>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="datepicker2">Sip Date</label></br>
+        <input name="datepicker2" id="datepicker2" width="276" />
+        <script>
+          $('#datepicker2').datepicker();
+          </script>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="form-row">
+    <div class="col-sm-2">
+      <input type="submit" class="btn btn-primary btn-sm pull-right" type="submit" value="Add Product">
+    </div>
+  </div>
+</form>
+</div>
+<!-- Content Row -->
+</br>
+
+{% endblock %}

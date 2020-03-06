@@ -18,13 +18,14 @@ from django import template
 
 defaultfundprice = 0
 search_term=''
-
 nse = Nse()
 top_gainers_nse = nse.get_top_gainers()
 top_losers_nse = nse.get_top_losers()
 bse = BSE()
 top_gainers_bse = bse.topGainers()
 top_losers_bse = bse.topLosers()
+
+
 ##moneycontrol appfeeds
 bseurl='http://appfeeds.moneycontrol.com/jsonapi/market/indices&ind_id=4'
 nseurl='http://appfeeds.moneycontrol.com/jsonapi/market/indices&ind_id=9'
@@ -57,7 +58,11 @@ def home(request):
     todate=t.strftime('%Y-%m-%d')
     yesterday = datetime.now() - timedelta(days=1)     
     fromdate=yesterday.strftime('%d/%m/%Y')
-    nifty_indice = nse.get_index_quote('NIFTY 50')
+    try:
+        nifty_indice = nse.get_index_quote('NIFTY 50')
+    except:
+        nifty_indice = []
+
     category = "market_cap/broad"
     #bse index using bsetools-not working
     #bse_indice= bse.getIndices(category)
@@ -118,6 +123,7 @@ def home(request):
          'toplosersbse':top_losers_bse,
         
          })
+    
     
   
     
@@ -185,7 +191,7 @@ def detail(request,product_id):
     nse = Nse()
     top_gainers = nse.get_top_gainers()
     top_losers = nse.get_top_losers()
-
+  
     response=requests.get(bseurl)
     bsedetail=response.json()
     response=requests.get(nseurl)
