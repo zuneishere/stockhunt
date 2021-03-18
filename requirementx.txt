@@ -9,7 +9,7 @@ djangorestframework==3.9.1
 get==2018.11.19
 idna==2.7
 nsetools==1.0.8
-Pillow==5.3.0
+Pillow==8.1.1
 post==2018.11.20
 psycopg2==2.7.6.1
 psycopg2-binary==2.7.6.1
