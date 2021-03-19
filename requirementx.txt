@@ -5,7 +5,7 @@ Django==2.0.2
 django-autocomplete-light==3.3.2
 django-crispy-forms==1.7.2
 django-querysetsequence==0.10
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 get==2018.11.19
 idna==2.7
 nsetools==1.0.8
