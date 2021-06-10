@@ -4,7 +4,7 @@ bsetools==0.3.3
 certifi==2018.11.29
 chardet==3.0.4
 dateutils==0.6.6
-Django==2.0.2
+Django==2.2.24
 django-autocomplete-light==3.3.2
 django-crispy-forms==1.7.2
 django-querysetsequence==0.10
