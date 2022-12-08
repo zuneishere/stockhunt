@@ -1,7 +1,7 @@
 beautifulsoup4==4.7.1
 bsedata==0.2.0
 bsetools==0.3.3
-certifi==2018.11.29
+certifi==2022.12.7
 chardet==3.0.4
 dateutils==0.6.6
 Django==2.0.2
